@@ -3,51 +3,70 @@ author: Jose Luis Godoy
 summary: Configuración Segura del Arranque en Grub2
 id: configuracion-grub2-2025
 categories: codelab, markdown
-environments: web
+environments: debian, linux, grub
 status: Published
 feedback link: https://github.com/aldimeneira/CiberSeguridadAlbertiPersonal/docs
 ---
 
-# Guía para el Bastionado del Arranque en Debian
+# Configuración Segura del Arranque en Debian
 
-Esta guía detalla los pasos para asegurar el proceso de arranque de un sistema Debian, centrándose en la protección del gestor de arranque \*\*GRUB 2\*\* con contraseña y ocultación del menú.
+## Paso 1: Generar contraseña cifrada para GRUB
 
-# Comandos de Bastionado de Arranque (GRUB 2\)
-
-Los siguientes comandos deben ejecutarse en una terminal de tu sistema Debian.
-
-# Paso 1: Generación de Contraseña Cifrada para GRUB
-
+El primer paso es generar una contraseña cifrada que se usará para proteger GRUB.  
+Ejecuta en la terminal:  
 sudo grub-mkpasswd-pbkdf2  
-(La salida será un hash largo que comienza con 'grub.pbkdf2.' \- Cópialo, es tu CONTRASEÑA\_CIFRADA)
 
-# Paso 2: Configuración de la Contraseña en GRUB: 
+La salida será un hash largo que comienza con 'grub.pbkdf2.'.  
+Cópialo, será tu CONTRASEÑA_CIFRADA.
 
-Ejecuta nano, inserta las líneas al final del archivo 40\_custom reemplazando CONTRASEÑA\_CIFRADA con tu hash, guarda y cierra.  
-sudo nano /etc/grub.d/40\_custom  
-(Dentro del editor, añade: set superusers="root" y password\_pbkdf2 root CONTRASEÑA\_CIFRADA)
+## Paso 2: Configurar la contraseña en GRUB
 
-# Paso 3: Aplicar Cambios y Actualizar la Configuración de GRUB 
+Edita el archivo 40_custom para establecer la contraseña cifrada:  
+sudo nano /etc/grub.d/40_custom  
 
-sudo update-grub
+Añade al final del archivo:  
+set superusers="root"  
+password_pbkdf2 root CONTRASEÑA_CIFRADA  
 
-# Paso 4: Proteger Permisos del Archivo de Configuración de GRUB
+Guarda y cierra el editor. Esto protege el acceso al menú de GRUB.
 
-sudo chmod 700 /etc/grub.d/40\_custom
+## Paso 3: Aplicar cambios y actualizar GRUB
 
-# Paso 5: Ocultar el Menú de GRUB: 
-Ejecuta nano y localiza la línea GRUB\_TIMEOUT=. Cámbiála a 0\. Guarda y cierra.
+Aplica la configuración ejecutando:  
+sudo update-grub  
 
+Esto asegura que la contraseña cifrada se aplique al gestor de arranque.
+
+## Paso 4: Proteger permisos del archivo de configuración de GRUB
+
+Asegura que solo root pueda modificar el archivo:  
+sudo chmod 700 /etc/grub.d/40_custom  
+
+Esto evita accesos no autorizados al archivo.
+
+## Paso 5: Ocultar el menú de GRUB
+
+Edita el archivo de configuración principal para ocultar el menú:  
 sudo nano /etc/default/grub  
-Dentro del archivo, cambia GRUB\_TIMEOUT=5 por GRUB\_TIMEOUT=0
 
-# Paso 6: Aplicar Cambios al Ocultar el Menú  
-sudo update-grub
+Cambia la línea GRUB_TIMEOUT=5 por GRUB_TIMEOUT=0  
 
-#  Paso 7: Creación de Copia de Seguridad de la Configuración del Arranque
+Guarda y cierra el editor. Esto oculta el menú al iniciar el sistema.
 
-mkdir \~/grub\_backup  
-sudo cp /etc/default/grub \~/grub\_backup/  
-sudo cp /boot/grub/grub.cfg \~/grub\_backup/  
-sudo cp \-r /etc/grub.d/ \~/grub\_backup/  
-ls \-l \~/grub\_backup/
+## Paso 6: Aplicar cambios al ocultar el menú
+
+Vuelve a ejecutar:  
+sudo update-grub  
+
+Esto aplica la nueva configuración de ocultación del menú.
+
+## Paso 7: Crear copia de seguridad de la configuración del arranque
+
+Es recomendable guardar una copia de seguridad de los archivos críticos de GRUB:  
+mkdir ~/grub_backup  
+sudo cp /etc/default/grub ~/grub_backup/  
+sudo cp /boot/grub/grub.cfg ~/grub_backup/  
+sudo cp -r /etc/grub.d/ ~/grub_backup/  
+ls -l ~/grub_backup/  
+
+Esto permite restaurar la configuración en caso de errores.
