@@ -1,9 +1,9 @@
+author: Jose Luis Godoy
 summary: Configuración Segura de la BIOS
-id: configuracion-segura-bios
-categories: ciberseguridad
-tags: bios, seguridad, pc
+id: configuracion-segura-bios-2025
+categories: codelab, markdown
+environments: bios
 status: Published
-authors: Jose Luis Godoy
 feedback link: https://github.com/aldimeneira/CiberSeguridadAlbertiPersonal/docs
 
 # Configuración Segura de la BIOS (Lenovo Legion 5 15ARH7 82RE)
@@ -46,7 +46,7 @@ Finalmente, activamos el **Secure Boot** para que solo se pueda iniciar **Window
 
 ![Activar Secure Boot](img/img5.png)
 
-## Step 7: Consideraciones finales
+## A tener en cuenta:
 
 - La configuración puede resetearse con Clear CMOS (quitar pila o jumper).  
 - Usar protección física para evitar accesos no autorizados.  
