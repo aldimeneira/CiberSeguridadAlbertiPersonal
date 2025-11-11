@@ -1,0 +1,25 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "https://storage.googleapis.com",
+  "mainga": "UA-49880327-14",
+  "updated": "2025-11-11T19:06:43+01:00",
+  "id": "configuracion-segura-bios-2025",
+  "duration": 0,
+  "title": "Configuración Segura de la BIOS (Lenovo Legion 5 15ARH7 82RE)",
+  "summary": "Configuración Segura de la BIOS",
+  "source": "Configuracion_Bios.md",
+  "theme": "",
+  "status": [
+    "published"
+  ],
+  "category": [
+    "codelab",
+    "markdown"
+  ],
+  "tags": [
+    "bios"
+  ],
+  "feedback": "https://github.com/aldimeneira/CiberSeguridadAlbertiPersonal/docs",
+  "url": "configuracion-segura-bios-2025"
+}

@@ -1,0 +1,27 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "https://storage.googleapis.com",
+  "mainga": "UA-49880327-14",
+  "updated": "2025-11-11T20:52:42+01:00",
+  "id": "configuracion-grub2-2025",
+  "duration": 0,
+  "title": "Configuración Segura del Arranque en Debian",
+  "summary": "Configuración Segura del Arranque en Grub2",
+  "source": "Configuracion_Debian.md",
+  "theme": "",
+  "status": [
+    "published"
+  ],
+  "category": [
+    "codelab",
+    "markdown"
+  ],
+  "tags": [
+    "debian",
+    "grub",
+    "linux"
+  ],
+  "feedback": "https://github.com/aldimeneira/CiberSeguridadAlbertiPersonal/docs",
+  "url": "configuracion-grub2-2025"
+}

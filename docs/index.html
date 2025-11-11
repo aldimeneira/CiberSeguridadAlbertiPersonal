@@ -1,91 +1,129 @@
-
 <!doctype html>
-
 <html>
 <head>
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
   <meta name="theme-color" content="#4F7DC9">
   <meta charset="UTF-8">
-  <title>Configuración Segura de la BIOS (Lenovo Legion 5 15ARH7 82RE)</title>
+  <title>Guías de Seguridad</title>
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
   <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://storage.googleapis.com/claat-public/codelab-elements.css">
   <style>
-    .success {
-      color: #1e8e3e;
-    }
-    .error {
-      color: red;
-    }
+    body { font-family: Roboto, sans-serif; padding: 20px; }
+    button { margin: 5px; padding: 10px 20px; cursor: pointer; }
+    .codelab-container { display: none; margin-top: 20px; }
   </style>
 </head>
 <body>
-  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
-  <google-codelab codelab-gaid=""
-                  id="configuracion-segura-bios-2025"
-                  title="Configuración Segura de la BIOS (Lenovo Legion 5 15ARH7 82RE)"
-                  environment="web"
-                  feedback-link="https://github.com/aldimeneira/CiberSeguridadAlbertiPersonal/docs">
-    
+  <h1>Guías de Seguridad</h1>
+  <button onclick="showGuide('bios')">Guía BIOS</button>
+  <button onclick="showGuide('debian')">Guía Debian</button>
+
+  <!-- Contenedor Guía BIOS -->
+  <div id="bios" class="codelab-container">
+    <google-codelab id="configuracion-segura-bios-2025"
+                    title="Configuración Segura de la BIOS (Lenovo Legion 5 15ARH7 82RE)"
+                    environment="web"
+                    feedback-link="https://github.com/aldimeneira/CiberSeguridadAlbertiPersonal/docs">
+      
       <google-codelab-step label="Paso 1: Establecer una contraseña de administración de la BIOS" duration="0">
-        <p>El primer paso es establecer una contraseña de la administración de la BIOS.<br> Debe ser una contraseña segura.</p>
-<p class="image-container"><img alt="Contraseña de administrador de BIOS" src="img\\2d4508677d878a1e.png"></p>
-
-
+        <p>El primer paso es establecer una contraseña de la administración de la BIOS. Debe ser una contraseña segura.</p>
+        <p class="image-container"><img alt="Contraseña de administrador de BIOS" src="img/img1.png"></p>
       </google-codelab-step>
-    
+
       <google-codelab-step label="Paso 2: Configurar una contraseña de usuario" duration="0">
         <p>Después debemos poner una contraseña de usuario, también debe ser una contraseña segura.</p>
-
-
       </google-codelab-step>
-    
+
       <google-codelab-step label="Paso 3: Establecer una contraseña en el HDD" duration="0">
-        <p>También debemos establecer una contraseña en el disco duro (HDD).<br> Para ello, debemos establecer una contraseña segura para el administrador.</p>
-<p class="image-container"><img alt="Contraseña del HDD" src="img\\6e767cc2d363085b.png"></p>
-
-
+        <p>También debemos establecer una contraseña en el disco duro (HDD). Para ello, debemos establecer una contraseña segura para el administrador.</p>
+        <p class="image-container"><img alt="Contraseña del HDD" src="img/img2.png"></p>
       </google-codelab-step>
-    
+
       <google-codelab-step label="Paso 4: Desactivar el arranque desde USB" duration="0">
         <p>Debemos desactivar el arranque desde USB para evitar que se pueda iniciar el sistema operativo desde cualquier dispositivo externo.</p>
-<p class="image-container"><img alt="Desactivar arranque desde USB" src="img\\8dff93d2d8a0da84.png"></p>
-
-
+        <p class="image-container"><img alt="Desactivar arranque desde USB" src="img/img3.png"></p>
       </google-codelab-step>
-    
+
       <google-codelab-step label="Paso 5: Configurar el orden de arranque" duration="0">
         <p>Establecemos el orden de arranque, en este caso elegimos <strong>Windows Boot Manager</strong> para que arranque desde el sistema operativo que tenemos en el disco, el cual está asegurado por nosotros.</p>
-<p>El otro método de arranque (EFI PXE Network) sirve para iniciar desde la red, lo que podría representar un vector de ataque.</p>
-<p class="image-container"><img alt="Orden de arranque - Windows Boot Manager" src="img\\544e13a8e741ec80.png"></p>
-
-
+        <p>El otro método de arranque (EFI PXE Network) sirve para iniciar desde la red, lo que podría representar un vector de ataque.</p>
+        <p class="image-container"><img alt="Orden de arranque - Windows Boot Manager" src="img/img4.png"></p>
       </google-codelab-step>
-    
+
       <google-codelab-step label="Paso 6: Activar Secure Boot" duration="0">
         <p>Finalmente, activamos el <strong>Secure Boot</strong> para que solo se pueda iniciar <strong>Windows</strong> y evitar cargas de sistemas no autorizadas.</p>
-<p class="image-container"><img alt="Activar Secure Boot" src="img\\a25a37e2c3b01cc4.png"></p>
-
-
+        <p class="image-container"><img alt="Activar Secure Boot" src="img/img5.png"></p>
       </google-codelab-step>
-    
+
       <google-codelab-step label="A tener en cuenta:" duration="0">
         <ul>
-<li>La configuración puede resetearse con Clear CMOS (quitar pila o jumper).</li>
-<li>Usar protección física para evitar accesos no autorizados.</li>
-<li>Algunos modelos admiten contraseñas maestras o almacenamiento de password no volátil.</li>
-</ul>
-
-
+          <li>La configuración puede resetearse con Clear CMOS (quitar pila o jumper).</li>
+          <li>Usar protección física para evitar accesos no autorizados.</li>
+          <li>Algunos modelos admiten contraseñas maestras o almacenamiento de password no volátil.</li>
+        </ul>
       </google-codelab-step>
-    
-  </google-codelab>
+
+    </google-codelab>
+  </div>
+
+  <!-- Contenedor Guía Debian -->
+  <div id="debian" class="codelab-container">
+    <google-codelab id="configuracion-grub2-2025"
+                    title="Configuración Segura del Arranque en Debian"
+                    environment="debian"
+                    feedback-link="https://github.com/aldimeneira/CiberSeguridadAlbertiPersonal/docs">
+
+      <google-codelab-step label="Paso 1: Generar contraseña cifrada para GRUB" duration="0">
+        <p>El primer paso es generar una contraseña cifrada que se usará para proteger GRUB.</p>
+        <p>Ejecuta en la terminal: sudo grub-mkpasswd-pbkdf2</p>
+        <p>La salida será un hash largo que comienza con 'grub.pbkdf2.'. Cópialo, será tu CONTRASEÑA_CIFRADA.</p>
+      </google-codelab-step>
+
+      <google-codelab-step label="Paso 2: Configurar la contraseña en GRUB" duration="0">
+        <p>Edita el archivo 40_custom para establecer la contraseña cifrada: sudo nano /etc/grub.d/40_custom</p>
+        <p>Añade al final del archivo:<br>set superusers="root"<br>password_pbkdf2 root CONTRASEÑA_CIFRADA</p>
+        <p>Guarda y cierra el editor. Esto protege el acceso al menú de GRUB.</p>
+      </google-codelab-step>
+
+      <google-codelab-step label="Paso 3: Aplicar cambios y actualizar GRUB" duration="0">
+        <p>Aplica la configuración ejecutando: sudo update-grub</p>
+        <p>Esto asegura que la contraseña cifrada se aplique al gestor de arranque.</p>
+      </google-codelab-step>
+
+      <google-codelab-step label="Paso 4: Proteger permisos del archivo de configuración de GRUB" duration="0">
+        <p>Asegura que solo root pueda modificar el archivo: sudo chmod 700 /etc/grub.d/40_custom</p>
+        <p>Esto evita accesos no autorizados al archivo.</p>
+      </google-codelab-step>
+
+      <google-codelab-step label="Paso 5: Ocultar el menú de GRUB" duration="0">
+        <p>Edita el archivo de configuración principal para ocultar el menú: sudo nano /etc/default/grub</p>
+        <p>Cambia la línea GRUB_TIMEOUT=5 por GRUB_TIMEOUT=0. Guarda y cierra el editor.</p>
+      </google-codelab-step>
+
+      <google-codelab-step label="Paso 6: Aplicar cambios al ocultar el menú" duration="0">
+        <p>Vuelve a ejecutar: sudo update-grub. Esto aplica la nueva configuración de ocultación del menú.</p>
+      </google-codelab-step>
+
+      <google-codelab-step label="Paso 7: Crear copia de seguridad de la configuración del arranque" duration="0">
+        <p>Es recomendable guardar una copia de seguridad de los archivos críticos de GRUB:</p>
+        <p>mkdir ~/grub_backup<br>sudo cp /etc/default/grub ~/grub_backup/<br>sudo cp /boot/grub/grub.cfg ~/grub_backup/<br>sudo cp -r /etc/grub.d/ ~/grub_backup/<br>ls -l ~/grub_backup/</p>
+        <p>Esto permite restaurar la configuración en caso de errores.</p>
+      </google-codelab-step>
+
+    </google-codelab>
+  </div>
 
   <script src="https://storage.googleapis.com/claat-public/native-shim.js"></script>
   <script src="https://storage.googleapis.com/claat-public/custom-elements.min.js"></script>
   <script src="https://storage.googleapis.com/claat-public/prettify.js"></script>
   <script src="https://storage.googleapis.com/claat-public/codelab-elements.js"></script>
-  <script src="//support.google.com/inapp/api.js"></script>
 
+  <script>
+    function showGuide(id) {
+      document.querySelectorAll('.codelab-container').forEach(c => c.style.display = 'none');
+      document.getElementById(id).style.display = 'block';
+    }
+  </script>
 </body>
 </html>

@@ -1,4 +1,4 @@
----
+
 author: Jose Luis Godoy
 summary: Configuración Segura del Arranque en Grub2
 id: configuracion-grub2-2025
@@ -6,7 +6,6 @@ categories: codelab, markdown
 environments: debian, linux, grub
 status: Published
 feedback link: https://github.com/aldimeneira/CiberSeguridadAlbertiPersonal/docs
----
 
 # Configuración Segura del Arranque en Debian
 
