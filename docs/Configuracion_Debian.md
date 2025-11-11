@@ -1,10 +1,12 @@
-author: Jose Luis Godoy  
-summary: Configuración Segura del Arranque en Grub2  
-id: configuracion-grub2-2025  
-categories: codelab, markdown  
+---
+author: Jose Luis Godoy
+summary: Configuración Segura del Arranque en Grub2
+id: configuracion-grub2-2025
+categories: codelab, markdown
 environments: web
-status: Published  
+status: Published
 feedback link: https://github.com/aldimeneira/CiberSeguridadAlbertiPersonal/docs
+---
 
 # Guía para el Bastionado del Arranque en Debian
 
