@@ -10,12 +10,14 @@
 ## Índice
 
 - [Resumen](#resumen)
+- [Parte_1](#parte-1)
 - [Metodología](#metodología)
   - [1. Evidencia analizada](#1-evidencia-analizada)
   - [2. Herramientas utilizadas](#2-herramientas-utilizadas)
   - [3. Análisis del sistema](#3-análisis-del-sistema)
   - [4. Análisis de usuarios del sistema](#4-análisis-de-usuarios-del-sistema)
-  - [5. Análisis de evidencias y delitos encontrados](#5-análisis-de-evidencias-y-delitos-encontrados)
+- [Parte_2](#parte-2)
+ - [1. Análisis de evidencias y delitos encontrados](#5-análisis-de-evidencias-y-delitos-encontrados)
 - [Conclusión](#conclusión)
 
 ---
@@ -25,6 +27,8 @@
 Análisis realizado a una imagen de un disco llamada **AFI_W.E01-E04** para buscar actividades ilícitas y sospechosas. La investigación se basó en revisar archivos eliminados, logs, historial de programas ejecutados, estructura del disco y registros del sistema.
 
 ---
+
+## Parte 1
 
 ## Metodología
 
@@ -104,7 +108,9 @@ Al estudiar al usuario John, podemos apreciar claramente una **incongruencia** e
 
 ![img12](./img/img12.png)
 
-### 5. Análisis de evidencias y delitos encontrados
+## Parte 2
+
+### 1. Análisis de evidencias y delitos encontrados
 
 En la primera carpeta que aparece dentro del disco duro llamado **Orphan Files**, aparece un conjunto de imagenes borradas que hemos podido recuperar, que contienen claramente imagenes de sustancias ilícitas, su lugar de almacenamiento, así como recetas para prepararlas y personas consumiendo dichas sustancias.
 
@@ -155,3 +161,4 @@ Tras un análisis exaustivo del dispositivo como hemos descrito anteriormente, h
 No se ha detectado evidencia de la implicación de los otros usuarios de este dispositivo en estas actividades, pero si hay **claras evidencias** que esta persona **no trabaja sola** (vease la imagen relacionada con los supuestos provedoores) y estoy firmemente convencido que son personas **altamente investigables**.
 
 ---
+
