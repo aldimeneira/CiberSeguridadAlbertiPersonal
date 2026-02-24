@@ -8,3 +8,7 @@ En todas las actividades hay que demostrar la forma de explotar la vulnerabilida
 - [CSRF](<CSRF/>) (Cross-Site Request Forgery): Uso de formularios sin conocimiento del usuario.
 - [RCE](<RCE/>) (Remote Code Execution): Ejecución de código en el sistema.
 - [Unsafe Deserialization](<Unsafe Deserialization/>): Carga objetos serializados sin validación.
+- [SSRF](<SSRF/>): Genera solicitudes desde el servidor.
+- [XXE](<XXE/>): Procesamiento de XML sin restricciones.
+- [LFI](<LFI/>): Inclusión de archivos del servidor en las peticiones.
+- [RFI](<RFI>): Inclusión de archivos en el servidor.
