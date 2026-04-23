@@ -1,0 +1,41 @@
+### Health check
+GET http://localhost:3000/health
+
+### Ver catálogo de productos
+GET http://localhost:3000/api/store/products
+
+### Registro de cliente
+POST http://localhost:3000/api/auth/register
+Content-Type: application/json
+
+{
+  "email": "cliente@clinicaveterinaria.es",
+  "password": "Test1234!",
+  "full_name": "Jose Luis"
+}
+
+### Ver mascotas disponibles
+GET http://localhost:3000/api/adoptions
+
+### Adoptar mascota (reemplaza TOKEN y UUID)
+POST http://localhost:3000/api/adoptions
+Content-Type: application/json
+Authorization: Bearer TOKEN
+
+{
+  "pet_id": "UUID_DE_LA_MASCOTA"
+}
+
+### Ver ofertas exclusivas adoptantes
+GET http://localhost:3000/api/store/products/exclusive
+Authorization: Bearer TOKEN
+
+### Realizar pedido
+POST http://localhost:3000/api/store/order
+Content-Type: application/json
+Authorization: Bearer TOKEN
+
+{
+  "product_id": "UUID_DEL_PRODUCTO",
+  "quantity": 1
+}

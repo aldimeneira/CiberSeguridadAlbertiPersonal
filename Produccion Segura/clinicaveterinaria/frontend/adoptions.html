@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clínica Veterinaria — Adopciones</title>
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/adoptions.css">
+</head>
+<body>
+
+  <nav class="navbar">
+    <a class="navbar__logo" href="dashboard.html">🐾 Clínica Veterinaria</a>
+    <div class="navbar__links">
+      <a class="navbar__link" href="dashboard.html">← Dashboard</a>
+      <button class="btn btn--ghost" onclick="window.cvAuth.logout()">Cerrar sesión</button>
+    </div>
+  </nav>
+
+  <main class="page-main">
+
+    <div class="page-header">
+      <h2 class="page-header__title">🐶 Adopciones</h2>
+      <p class="page-header__sub">Dale un hogar a quien más lo necesita</p>
+    </div>
+
+    <div class="alert alert--info" style="display:block">
+      💙 Al adoptar, desbloqueas <strong>descuentos exclusivos</strong> en tienda y servicios veterinarios.
+    </div>
+
+    <div id="success-msg" class="alert alert--success"></div>
+
+    <div id="pets-grid" class="cards-grid">
+      <p class="state-empty">Cargando mascotas disponibles...</p>
+    </div>
+
+  </main>
+
+  <script type="module" src="js/auth.js"></script>
+  <script type="module">
+    import { apiFetch } from './js/api.js';
+
+    function getSpeciesEmoji(species) {
+      if (species === 'perro') return '🐶';
+      if (species === 'gato') return '🐱';
+      return '🐾';
+    }
+
+    async function loadPets() {
+      const pets = await apiFetch('/adoptions');
+      const grid = document.getElementById('pets-grid');
+      if (!pets.length) {
+        grid.innerHTML = '<p class="state-empty">No hay mascotas disponibles ahora mismo.</p>';
+        return;
+      }
+      grid.innerHTML = pets.map(p => `
+        <div class="pet-card" id="pet-${p.id}">
+          ${p.image_url
+            ? `<img class="pet-card__img" src="${p.image_url}" alt="${p.name}">`
+            : `<div class="pet-card__placeholder">
+                ${getSpeciesEmoji(p.species)}
+               </div>`}
+          <div class="pet-card__body">
+            <h3 class="pet-card__name">${p.name}</h3>
+            <p class="pet-card__meta">
+              ${[p.species, p.breed, p.age ? p.age + ' años' : ''].filter(Boolean).join(' · ')}
+            </p>
+            <button class="btn btn--success btn--full" onclick="adoptPet('${p.id}', '${p.name}')">
+              Adoptar a ${p.name} 🐾
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    globalThis.adoptPet = async (petId, petName) => {
+      if (!confirm(`¿Confirmas que quieres adoptar a ${petName}?`)) return;
+      try {
+        const data = await apiFetch('/adoptions', {
+          method: 'POST',
+          body: JSON.stringify({ pet_id: petId })
+        });
+        const msg = document.getElementById('success-msg');
+        msg.style.display = 'block';
+        msg.textContent = data.message;
+        document.getElementById(`pet-${petId}`)?.remove();
+      } catch (err) {
+        alert(`❌ ${err.message}`);
+      }
+    };
+
+    window.addEventListener('load', loadPets);
+  </script>
+</body>
+</html>

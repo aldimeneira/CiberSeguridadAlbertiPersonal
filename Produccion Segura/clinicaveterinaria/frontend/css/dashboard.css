@@ -1,0 +1,49 @@
+/* ============================================
+   Dashboard
+   ============================================ */
+
+.welcome-banner {
+  background: linear-gradient(135deg, #1e3a5f, var(--bg-surface));
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.welcome-banner__title {
+  font-size: 1.5rem;
+  margin-bottom: 0.4rem;
+}
+
+.welcome-banner__sub { color: var(--text-muted); }
+
+/* ---- Tarjetas de menú ---- */
+.menu-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  text-decoration: none;
+  color: var(--text-primary);
+  transition: border-color 0.2s, transform 0.2s;
+  display: block;
+}
+
+.menu-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-3px);
+}
+
+.menu-card__icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.menu-card__title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+}
+
+.menu-card__desc { color: var(--text-muted); font-size: 0.85rem; }

@@ -1,0 +1,196 @@
+/* ============================================
+   CLINICA VETERINARIA — Estilos globales
+   ============================================ */
+
+/* Variables */
+:root {
+  --bg-base:       #0f172a;
+  --bg-surface:    #1e293b;
+  --bg-hover:      #263548;
+  --border:        #334155;
+  --text-primary:  #e2e8f0;
+  --text-muted:    #94a3b8;
+  --text-disabled: #475569;
+  --accent:        #38bdf8;
+  --accent-dark:   #0369a1;
+  --success:       #16a34a;
+  --success-bg:    #052e16;
+  --success-text:  #86efac;
+  --danger:        #dc2626;
+  --danger-bg:     #450a0a;
+  --danger-text:   #fca5a5;
+  --warning-bg:    #1e3a5f;
+  --warning-border:#1d4ed8;
+  --warning-text:  #93c5fd;
+  --radius-sm:     8px;
+  --radius-md:     12px;
+  --radius-lg:     16px;
+  --shadow:        0 20px 60px rgba(0,0,0,0.4);
+}
+
+/* Reset */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  background: var(--bg-base);
+  color: var(--text-primary);
+  min-height: 100vh;
+}
+
+/* ---- Navbar ---- */
+.navbar {
+  background: var(--bg-surface);
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.navbar__logo {
+  color: var(--accent);
+  font-size: 1.3rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.navbar__links {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.navbar__link {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: color 0.2s;
+}
+
+.navbar__link:hover { color: var(--accent); }
+
+/* ---- Botones ---- */
+.btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.1s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  text-decoration: none;
+}
+
+.btn:hover  { opacity: 0.85; }
+.btn:active { transform: scale(0.98); }
+
+.btn--primary  { background: var(--accent); color: var(--bg-base); }
+.btn--success  { background: var(--success); color: #fff; }
+.btn--ghost    { background: transparent; border: 1px solid var(--border); color: var(--text-muted); }
+.btn--google   { background: #fff; color: #1e293b; }
+.btn--full     { width: 100%; }
+
+/* ---- Badges de rol ---- */
+.role-badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.role-badge--admin      { background: #7c3aed; color: #fff; }
+.role-badge--cliente    { background: var(--accent-dark); color: #fff; }
+.role-badge--veterinario{ background: #065f46; color: #fff; }
+.role-badge--ventas     { background: #92400e; color: #fff; }
+
+/* ---- Alertas / Banners ---- */
+.alert {
+  padding: 0.85rem 1.25rem;
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+  margin-bottom: 1.25rem;
+  display: none;
+}
+
+.alert--success {
+  background: var(--success-bg);
+  border: 1px solid var(--success);
+  color: var(--success-text);
+}
+
+.alert--error {
+  background: var(--danger-bg);
+  border: 1px solid var(--danger);
+  color: var(--danger-text);
+}
+
+.alert--info {
+  background: var(--warning-bg);
+  border: 1px solid var(--warning-border);
+  color: var(--warning-text);
+}
+
+.alert--adopter {
+  background: linear-gradient(135deg, #14532d, #166534);
+  border: 1px solid var(--success);
+  color: var(--success-text);
+  font-weight: 600;
+}
+
+/* ---- Layout ---- */
+.page-main {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.page-header { margin-bottom: 2rem; }
+.page-header__title { font-size: 1.6rem; margin-bottom: 0.4rem; }
+.page-header__sub   { color: var(--text-muted); }
+
+/* ---- Grid de tarjetas ---- */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+
+/* ---- Estado vacío / cargando ---- */
+.state-empty {
+  text-align: center;
+  color: var(--text-muted);
+  padding: 3rem;
+  grid-column: 1 / -1;
+}
+
+/* ---- Divider ---- */
+.divider {
+  text-align: center;
+  color: var(--text-disabled);
+  margin: 1rem 0;
+  font-size: 0.85rem;
+  position: relative;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 35%;
+  height: 1px;
+  background: var(--border);
+}
+
+.divider::before { left: 0; }
+.divider::after  { right: 0; }

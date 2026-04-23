@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clínica Veterinaria — Dashboard</title>
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+
+  <nav class="navbar">
+    <a class="navbar__logo" href="dashboard.html">🐾 Clínica Veterinaria</a>
+    <div class="navbar__links">
+      <span id="user-name" class="navbar__link"></span>
+      <span id="role-badge" class="role-badge"></span>
+      <button class="btn btn--ghost" onclick="window.cvAuth.logout()">Cerrar sesión</button>
+    </div>
+  </nav>
+
+  <main class="page-main">
+
+    <div class="welcome-banner">
+      <h2 id="welcome-msg" class="welcome-banner__title">Bienvenido/a 👋</h2>
+      <p class="welcome-banner__sub">Gestiona todo desde tu panel</p>
+    </div>
+
+    <div id="adopter-banner" class="alert alert--adopter">
+      🐾 ¡Eres adoptante! Tienes descuentos exclusivos en tienda y servicios.
+    </div>
+
+    <div id="cards-grid" class="cards-grid"></div>
+
+  </main>
+
+  <script type="module" src="js/auth.js"></script>
+  <script type="module">
+    const menuByRole = {
+      admin: [
+        { icon: '👥', title: 'Usuarios',   desc: 'Gestionar roles y accesos',           href: '#' },
+        { icon: '🛍️', title: 'Tienda',     desc: 'Gestionar productos y stock',         href: 'store.html' },
+        { icon: '🐶', title: 'Adopciones', desc: 'Gestionar mascotas',                  href: 'adoptions.html' },
+        { icon: '🩺', title: 'Servicios',  desc: 'Gestionar servicios veterinarios',    href: '#' },
+        { icon: '📊', title: 'Reportes',   desc: 'Ver estadísticas y pedidos',          href: '#' }
+      ],
+      cliente: [
+        { icon: '🛍️', title: 'Tienda',     desc: 'Comprar productos para tu mascota',  href: 'store.html' },
+        { icon: '🐶', title: 'Adopciones', desc: 'Adoptar una mascota',                href: 'adoptions.html' },
+        { icon: '🩺', title: 'Citas',      desc: 'Reservar servicio veterinario',      href: '#' },
+        { icon: '📦', title: 'Mis pedidos',desc: 'Ver historial de compras',            href: '#' }
+      ],
+      veterinario: [
+        { icon: '🩺', title: 'Mis citas',  desc: 'Ver agenda del día',                 href: '#' },
+        { icon: '🐾', title: 'Historiales',desc: 'Historial médico de pacientes',      href: '#' },
+        { icon: '💊', title: 'Servicios',  desc: 'Gestionar mis servicios',            href: '#' }
+      ],
+      ventas: [
+        { icon: '🛍️', title: 'Productos',  desc: 'Gestionar catálogo y stock',         href: 'store.html' },
+        { icon: '🐶', title: 'Mascotas',   desc: 'Registrar mascotas en adopción',     href: 'adoptions.html' },
+        { icon: '📊', title: 'Pedidos',    desc: 'Ver pedidos realizados',             href: '#' }
+      ]
+    };
+
+    window.addEventListener('load', async () => {
+      const token = await globalThis.cvAuth?.getToken?.();
+      if (!token) {
+        globalThis.location.href = 'index.html';
+        return;
+      }
+
+      import { SUPABASE_URL, SUPABASE_ANON_KEY } from './js/auth.js';
+      const { createClient } = await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm');
+      const sb = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+      const { data: { user } } = await sb.auth.getUser();
+      const { data: profile } = await sb.from('profiles').select('*').eq('id', user.id).single();
+
+      document.getElementById('user-name').textContent = profile.full_name;
+      document.getElementById('welcome-msg').textContent = `Bienvenida/o, ${profile.full_name} 👋`;
+
+      const badge = document.getElementById('role-badge');
+      badge.textContent = profile.role;
+      badge.className = `role-badge role-badge--${profile.role}`;
+
+      if (profile.has_adopted) {
+        document.getElementById('adopter-banner').style.display = 'block';
+      }
+
+      const menu = menuByRole[profile.role] || menuByRole.cliente;
+      document.getElementById('cards-grid').innerHTML = menu.map(item => `
+        <a class="menu-card" href="${item.href}">
+          <span class="menu-card__icon">${item.icon}</span>
+          <h3 class="menu-card__title">${item.title}</h3>
+          <p class="menu-card__desc">${item.desc}</p>
+        </a>
+      `).join('');
+    });
+  </script>
+</body>
+</html>

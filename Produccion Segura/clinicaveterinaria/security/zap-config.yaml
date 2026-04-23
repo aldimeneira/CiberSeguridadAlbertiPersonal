@@ -1,0 +1,15 @@
+rules:
+  - id: 10035
+    action: IGNORE
+  - id: 40012
+    action: WARN
+  - id: 40014
+    action: WARN
+  - id: 40018
+    action: FAIL
+  - id: 40019
+    action: FAIL
+  - id: 10202
+    action: WARN
+  - id: 10098
+    action: WARN

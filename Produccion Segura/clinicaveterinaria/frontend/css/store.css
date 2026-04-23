@@ -1,0 +1,71 @@
+/* ============================================
+   Tienda
+   ============================================ */
+
+/* ---- Tabs ---- */
+.tabs {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+}
+
+.tab {
+  padding: 0.6rem 1.4rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+}
+
+.tab--active {
+  background: var(--accent);
+  color: var(--bg-base);
+  border-color: var(--accent);
+  font-weight: 600;
+}
+
+/* ---- Tarjeta de producto ---- */
+.product-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  transition: border-color 0.2s;
+}
+
+.product-card--exclusive { border-color: var(--success); }
+
+.product-card__name  { font-size: 1.05rem; font-weight: 600; }
+.product-card__desc  { color: var(--text-muted); font-size: 0.85rem; flex: 1; }
+
+/* ---- Precio ---- */
+.price-box { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+
+.price-original {
+  color: var(--text-disabled);
+  text-decoration: line-through;
+  font-size: 0.9rem;
+}
+
+.price-badge {
+  background: var(--success);
+  color: #fff;
+  padding: 0.2rem 0.5rem;
+  border-radius: 6px;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.price-final {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--accent);
+  display: block;
+  width: 100%;
+}

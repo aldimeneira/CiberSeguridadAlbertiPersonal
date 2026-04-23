@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clínica Veterinaria — Tienda</title>
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/store.css">
+</head>
+<body>
+
+  <nav class="navbar">
+    <a class="navbar__logo" href="dashboard.html">🐾 Clínica Veterinaria</a>
+    <div class="navbar__links">
+      <a class="navbar__link" href="dashboard.html">← Dashboard</a>
+      <button class="btn btn--ghost" onclick="window.cvAuth.logout()">Cerrar sesión</button>
+    </div>
+  </nav>
+
+  <main class="page-main">
+
+    <div class="page-header">
+      <h2 class="page-header__title">🛍️ Tienda</h2>
+      <p class="page-header__sub">Productos para el bienestar de tu mascota</p>
+    </div>
+
+    <div id="adopter-badge" class="alert alert--adopter"></div>
+
+    <div class="tabs">
+      <button class="tab tab--active" id="tab-all"       onclick="switchTab('all')">Todos los productos</button>
+      <button class="tab"             id="tab-exclusive" onclick="switchTab('exclusive')">🐾 Ofertas exclusivas</button>
+    </div>
+
+    <div id="products-grid" class="cards-grid">
+      <p class="state-empty">Cargando productos...</p>
+    </div>
+
+  </main>
+
+  <script type="module" src="js/auth.js"></script>
+  <script type="module">
+    import { apiFetch } from './js/api.js';
+
+    globalThis.switchTab = (tab) => {
+      document.getElementById('tab-all').classList.toggle('tab--active', tab === 'all');
+      document.getElementById('tab-exclusive').classList.toggle('tab--active', tab === 'exclusive');
+      tab === 'all' ? loadProducts() : loadExclusive();
+    };
+
+    async function loadProducts() {
+      const products = await apiFetch('/store/products');
+      renderProducts(products, false);
+    }
+
+    async function loadExclusive() {
+      const { products, adopter_benefits } = await apiFetch('/store/products/exclusive');
+      const badge = document.getElementById('adopter-badge');
+      if (adopter_benefits) {
+        badge.style.display = 'block';
+        badge.textContent = '🐾 ¡Descuentos activos por adoptar!';
+      }
+      renderProducts(products, adopter_benefits);
+    }
+
+    function renderProducts(products, showDiscount) {
+      const grid = document.getElementById('products-grid');
+      if (!products.length) {
+        grid.innerHTML = '<p class="state-empty">No hay productos disponibles.</p>';
+        return;
+      }
+      grid.innerHTML = products.map(p => `
+        <div class="product-card ${showDiscount && p.discount_applied > 0 ? 'product-card--exclusive' : ''}">
+          <h3 class="product-card__name">${p.name}</h3>
+          <p class="product-card__desc">${p.description || 'Sin descripción'}</p>
+          <div class="price-box">
+            ${showDiscount && p.discount_applied > 0 ? `
+              <span class="price-original">€${p.price}</span>
+              <span class="price-badge">-${p.discount_applied}%</span>
+              <strong class="price-final">€${p.final_price}</strong>
+            ` : `<strong class="price-final">€${p.price}</strong>`}
+          </div>
+          <button class="btn btn--primary btn--full" onclick="buyProduct('${p.id}')">
+            Añadir al pedido
+          </button>
+        </div>
+      `).join('');
+    }
+
+    globalThis.buyProduct = async (productId) => {
+      try {
+        const data = await apiFetch('/store/order', {
+          method: 'POST',
+          body: JSON.stringify({ product_id: productId, quantity: 1 })
+        });
+        alert(`✅ Pedido realizado. ${data.savings > 0 ? `¡Ahorraste €${data.savings}!` : ''}`);
+      } catch (err) {
+        alert(`❌ ${err.message}`);
+      }
+    };
+
+    globalThis.addEventListener('load', loadProducts);
+  </script>
+</body>
+</html>

@@ -1,0 +1,97 @@
+name: clinicaveterinaria - DevSecOps Pipeline
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+jobs:
+  sast-sonarqube:
+    name: SAST - SonarQube
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Instalar dependencias
+        working-directory: backend
+        run: npm ci
+      - name: Tests con cobertura
+        working-directory: backend
+        run: npm test -- --coverage --coverageReporters=lcov
+      - name: SonarQube Scan
+        uses: SonarSource/sonarqube-scan-action@v3
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+        with:
+          projectBaseDir: backend
+      - name: SonarQube Quality Gate
+        uses: SonarSource/sonarqube-quality-gate-action@v1
+        timeout-minutes: 5
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+  rca-dependency-check:
+    name: RCA - OWASP Dependency Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: OWASP Dependency Check
+        uses: dependency-check/Dependency-Check_Action@main
+        with:
+          project: 'clinicaveterinaria'
+          path: 'backend'
+          format: 'HTML'
+          args: >
+            --failOnCVSS 7
+            --enableRetired
+            --nvdApiKey ${{ secrets.NVD_API_KEY }}
+      - name: Subir reporte
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: clinicaveterinaria-dep-check-report
+          path: reports/
+
+  deploy-staging:
+    name: Deploy Staging
+    needs: [sast-sonarqube, rca-dependency-check]
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/develop'
+    steps:
+      - name: Trigger Render Staging
+        run: curl -X POST "${{ secrets.RENDER_DEPLOY_HOOK_STAGING }}"
+
+  dast-owasp-zap:
+    name: DAST - OWASP ZAP
+    needs: deploy-staging
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: OWASP ZAP Full Scan
+        uses: zaproxy/action-full-scan@v0.10.0
+        with:
+          target: ${{ secrets.STAGING_URL }}
+          rules_file_name: security/zap-config.yaml
+          cmd_options: '-a -j'
+      - name: Subir reporte ZAP
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: clinicaveterinaria-zap-report
+          path: report_html.html
+
+  deploy-production:
+    name: Deploy Producción
+    needs: dast-owasp-zap
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    environment: production
+    steps:
+      - name: Deploy via Render Hook
+        run: curl -X POST "${{ secrets.RENDER_DEPLOY_HOOK_PROD }}"
