@@ -34,5 +34,10 @@ Una vez realizado esto, ya tenemos el dominio creado
 
 Nuestro certificado propio
 
-![CertificadoPropio](./img/cerficiadopropio.png.png)
+![CertificadoPropio](./img/cerficiadopropio.png)
+
+Procedemos a comprobar el resultado del certificado que hemos creado en nuestro dominio analizandolo con la web https://www.ssllabs.com/ssltest/
+
+![ResultadoEscaneo](./img/resultadocertificadossl.png)
+
 
