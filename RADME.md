@@ -1,1 +1,0 @@
-# [CiberSeguridadAlbertiPersonal](https://aldimeneira.github.io/CiberSeguridadAlbertiPersonal/#0)
